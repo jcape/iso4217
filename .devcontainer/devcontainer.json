@@ -1,0 +1,67 @@
+{
+  "capAdd": [
+    "SYS_PTRACE"
+  ],
+  "containerEnv": {
+    "CARGO_HOME": "/workspaces/iso4217/.cache/cargo",
+    "CARGO_PROFILE_DEV_BUILD_OVERRIDE_DEBUG": "true",
+    "EDITOR": "code --reuse-window --wait",
+    "PREK_HOME": "/workspaces/iso4217/.cache/pre-commit"
+  },
+  "containerUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "DavidAnson.vscode-markdownlint",
+        "barbosshack.crates-io",
+        "dotjoshjohnson.xml",
+        "flydreame.docblocker",
+        "github.vscode-github-actions",
+        "github.vscode-pull-request-github",
+        "mechatroner.rainbow-csv",
+        "ms-azuretools.vscode-containers",
+        "panicbit.cargo",
+        "tamasfe.even-better-toml",
+        "vadimcn.vscode-lldb"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "modificationsIfAvailable",
+        "[rust]": {
+          "editor.wordWrapColumn": 100,
+          "editor.rulers": [
+            100
+          ]
+        },
+        "rust-analyzer.cargo.targetDir": true,
+        "rust-analyzer.imports.granularity.enforce": true,
+        "rust-analyzer.imports.granularity.group": "crate",
+        "rust-analyzer.imports.group.enable": false,
+        "rust-analyzer.imports.merge.glob": false
+      }
+    }
+  },
+  "image": "mcr.microsoft.com/devcontainers/base:debian",
+  "features": {
+    "ghcr.io/devcontainers/features/git-lfs:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/rust:1": {
+      "profile": "complete"
+    },
+    "ghcr.io/devcontainers-extra/features/pre-commit:2": {}
+  },
+  "name": "iso4217",
+  "privileged": true,
+  "postCreateCommand": "/workspaces/iso4217/.devcontainer/post-create.sh",
+  "postStartCommand": "/workspaces/iso4217/.devcontainer/post-start.sh",
+  "remoteEnv": {
+    "CARGO_HOME": "/workspaces/iso4217/.cache/cargo",
+    "CARGO_PROFILE_DEV_BUILD_OVERRIDE_DEBUG": "true",
+    "EDITOR": "code --reuse-window --wait",
+    "PREK_HOME": "/workspaces/iso4217/.cache/prek"
+  },
+  "securityOpt": [
+    "seccomp=unconfined"
+  ],
+  "updateRemoteUserUID": true
+}
