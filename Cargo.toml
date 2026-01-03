@@ -1,0 +1,44 @@
+[workspace]
+resolver = "2"
+members = ["parser"]
+exclude = [".cache"]
+
+[workspace.dependencies]
+chrono = { version = "0.4", default-features = false }
+iso3166-static = { version = "0.3" }
+iso4217-parser = { path = "./parser", version = "=0.1.0" }
+serde = { version = "1", default-features = false, features = ["derive"] }
+serde_json = "1"
+quick-xml = { version = "0.38", features = ["serialize"] }
+
+[workspace.lints.clippy]
+cargo = "deny"
+complexity = "deny"
+pedantic = "deny"
+perf = "deny"
+style = "deny"
+
+[workspace.lints.rust]
+missing_debug_implementations = "deny"
+missing_docs = "deny"
+unreachable_pub = "deny"
+rust_2018_idioms = "deny"
+unsafe_code = "deny"
+
+[workspace.metadata.release]
+shared-version = true
+consolidate-commits = true
+tag-name = "v{{version}}"
+
+[workspace.package]
+authors = ["James Cape <jamescape777@pm.me>"]
+edition = "2024"
+homepage = "https://github.com/jcape/iso4217"
+license = "Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/jcape/iso4217"
+rust-version = "1.87.0"
+version = "0.1.0"
+
+[profile.release]
+lto = true
