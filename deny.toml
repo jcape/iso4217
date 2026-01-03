@@ -1,0 +1,43 @@
+[advisories]
+db-path = "~/.cargo/advisory-db"
+db-urls = ["https://github.com/rustsec/advisory-db"]
+yanked = "deny"
+version = 2
+
+[licenses]
+version = 2
+allow = [
+    "Apache-2.0",
+    "MIT",
+    "Unicode-3.0"
+]
+confidence-threshold = 0.8
+exceptions = []
+
+[bans]
+allow-wildcard-paths = true
+allow = []
+deny = [
+    { name = "ring", reason = "https://github.com/briansmith/ring/issues/774" },
+]
+highlight = "all"
+multiple-versions = "deny"
+skip = []
+skip-tree = []
+wildcards = "deny"
+
+[bans.workspace-dependencies]
+duplicates = 'deny'
+include-path-dependencies = true
+unused = 'deny'
+
+[sources]
+unknown-registry = "warn"
+unknown-git = "warn"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []
+
+[sources.allow-org]
+github = []
+gitlab = []
+bitbucket = []
