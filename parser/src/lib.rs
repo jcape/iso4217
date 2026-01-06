@@ -1,5 +1,7 @@
 //! ISO 4217 XML Parser
 
+#![doc = include_str!("../README.md")]
+
 use chrono::{NaiveDate, ParseResult};
 use serde::{Deserialize, Serialize};
 
