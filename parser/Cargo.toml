@@ -15,7 +15,7 @@ version.workspace = true
 [dependencies]
 chrono = { workspace = true, features = ["std", "serde"] }
 iso3166-static = { workspace = true, features = ["serde", "alloc"] }
-serde = { workspace = true, features = ["derive"] }
+serde = { workspace = true, features = ["derive", "alloc"] }
 
 [dev-dependencies]
 yare = "3"
