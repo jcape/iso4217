@@ -1,0 +1,33 @@
+[package]
+name = "iso4217-static"
+authors.workspace = true
+categories = ["finance", "localization", "no-std", "no-std::no-alloc"]
+description = "Parser for ISO ISO4217 XML Data"
+documentation = "https://docs.rs/iso4217-static"
+edition.workspace = true
+keywords = ["iso4217", "currency"]
+license.workspace = true
+readme = "README.md"
+repository.workspace = true
+rust-version.workspace = true
+version.workspace = true
+
+[dependencies]
+chrono.workspace = true
+iso3166-static.workspace = true
+iso4217-macros.workspace = true
+serde = { workspace = true, optional = true, features = ["derive"] }
+
+[build-dependencies]
+iso4217-macros.workspace = true
+
+[features]
+default = ["serde"]
+alloc = ["serde?/alloc", "iso3166-static/alloc"]
+serde = ["dep:serde", "iso3166-static/serde"]
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
