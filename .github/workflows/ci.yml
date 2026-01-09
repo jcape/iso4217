@@ -1,3 +1,4 @@
+---
 name: ci
 permissions:
   contents: read
