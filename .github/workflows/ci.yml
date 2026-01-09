@@ -1,5 +1,6 @@
----
 name: ci
+permissions:
+  contents: read
 
 "on":
   pull_request:
@@ -13,6 +14,8 @@ env:
 
 jobs:
   lint:
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
