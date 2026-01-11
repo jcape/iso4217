@@ -14,7 +14,7 @@ version.workspace = true
 
 [dependencies]
 chrono.workspace = true
-iso3166-static = { version = "0.3", default-features = false }
+iso3166-static = { version = "0.4.0", default-features = false }
 iso4217-macros.workspace = true
 serde = { workspace = true, optional = true, features = ["derive"] }
 
