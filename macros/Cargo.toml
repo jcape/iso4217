@@ -15,7 +15,6 @@ version.workspace = true
 [dependencies]
 chrono = { workspace = true, features = ["std", "serde"] }
 heck = "0.5"
-iso3166-static = { workspace = true, features = ["serde", "alloc"] }
 iso4217-parser.workspace = true
 proc-macro2 = "1"
 quote = "1"

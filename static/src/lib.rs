@@ -7,6 +7,7 @@
 mod _serde;
 
 use core::str::FromStr;
+use iso3166_static::{Alpha2, Alpha3, Numeric};
 
 iso4217_macros::generate!(xml = "list-one.xml");
 
@@ -28,6 +29,26 @@ impl Error {
     pub const fn is_invalid_charset(&self) -> bool {
         matches!(self, Self::InvalidCharset)
     }
+
+    /// Whether this error is of the `InvalidCharset` variant.
+    #[must_use]
+    pub const fn is_no_universal_currency(&self) -> bool {
+        matches!(self, Self::NoUniversalCurrency)
+    }
+}
+
+impl AsRef<str> for Currency {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+
+impl FromStr for Currency {
+    type Err = Error;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::try_from(s)
+    }
 }
 
 impl TryFrom<u16> for Currency {
@@ -46,16 +67,63 @@ impl TryFrom<&str> for Currency {
     }
 }
 
-impl FromStr for Currency {
-    type Err = Error;
+impl TryFrom<Numeric> for Currency {
+    type Error = Error;
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Self::try_from(s)
+    fn try_from(value: Numeric) -> Result<Self, Self::Error> {
+        Self::from_numeric_country(value).ok_or(Error::NoUniversalCurrency)
     }
 }
 
-impl AsRef<str> for Currency {
-    fn as_ref(&self) -> &str {
-        self.as_str()
+impl TryFrom<Alpha2> for Currency {
+    type Error = Error;
+
+    fn try_from(value: Alpha2) -> Result<Self, Self::Error> {
+        Self::from_alpha2_country(value).ok_or(Error::NoUniversalCurrency)
+    }
+}
+
+impl TryFrom<Alpha3> for Currency {
+    type Error = Error;
+
+    fn try_from(value: Alpha3) -> Result<Self, Self::Error> {
+        Self::from_alpha3_country(value).ok_or(Error::NoUniversalCurrency)
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    use iso3166_static::{Alpha2, Alpha3, Numeric};
+
+    #[test]
+    fn for_country() {
+        const NO_CURRENCY: &[Numeric] = &[
+            Numeric::Antarctica,
+            Numeric::SouthGeorgiaAndTheSouthSandwichIslands,
+            Numeric::Palestine,
+        ];
+
+        for i in 1..=899 {
+            // if the numeric code is valid, and it's not user-assigned.
+            if let Ok(numeric) = Numeric::from_u16(i)
+                && let Ok(alpha2) = Alpha2::from_numeric(numeric)
+                && let Ok(alpha3) = Alpha3::from_numeric(numeric)
+            {
+                let numeric_currency = Currency::from_numeric_country(numeric);
+                let alpha2_currency = Currency::from_alpha2_country(alpha2);
+                let alpha3_currency = Currency::from_alpha3_country(alpha3);
+
+                if NO_CURRENCY.contains(&numeric) {
+                    assert!(numeric_currency.is_none());
+                    assert!(alpha2_currency.is_none());
+                    assert!(alpha3_currency.is_none());
+                } else {
+                    assert!(numeric_currency.is_some());
+                    assert!(alpha2_currency.is_some());
+                    assert!(alpha3_currency.is_some());
+                }
+            }
+        }
     }
 }

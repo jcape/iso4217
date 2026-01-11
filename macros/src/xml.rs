@@ -13,7 +13,7 @@ use syn::{Error, Meta, Result, Token, parse::Parser, punctuated::Punctuated};
 
 fn build_error() -> TokenStream {
     quote::quote! {
-        /// ISO 4217 Currency Codes.
+        /// Errors encountered when interacting ISO 4217 currency codes.
         #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
         #[non_exhaustive]
         pub enum Error {
@@ -23,6 +23,8 @@ fn build_error() -> TokenStream {
             InvalidLength,
             /// The code string given contains non-ASCII characters.
             InvalidCharset,
+            /// The country in question does not have a universal currency.
+            NoUniversalCurrency,
         }
     }
 }
@@ -55,6 +57,8 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
     let name = entryset.name();
     let is_fund = entryset.is_fund();
     let minor_unit = entryset.minor_unit();
+    let country_ident = entryset.country_ident();
+    let currency_ident = entryset.currency_ident();
 
     quote::quote! {
         impl Currency {
@@ -88,7 +92,7 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
                 }
             }
 
-            /// Get the string code for this currency value.
+            /// The string code for this currency value.
             pub const fn as_str(&self) -> &'static str {
                 match self {
                     #(
@@ -97,7 +101,7 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
                 }
             }
 
-            /// Get the string code for this currency value.
+            /// The name of this currency.
             pub const fn name(&self) -> &'static str {
                 match self {
                     #(
@@ -106,7 +110,7 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
                 }
             }
 
-            /// Get the string code for this currency value.
+            /// Whether this currency code represents a fund or not.
             pub const fn is_fund(&self) -> bool {
                 match self {
                     #(
@@ -115,12 +119,45 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
                 }
             }
 
-            /// Get the minor unit decimal place, if there is a minor unit.
+            /// The minor unit decimal place, if there is a minor unit.
             pub const fn minor_unit(&self) -> Option<u8> {
                 match self {
                     #(
                         Self::#id => #minor_unit,
                     )*
+                }
+            }
+
+            /// The primary currency for the given country, if there is one.
+            pub const fn from_numeric_country(value: iso3166_static::Numeric) -> Option<Self> {
+                match value {
+                    #(
+                        iso3166_static::Numeric::#country_ident => Some(Self::#currency_ident),
+                    )*
+
+                    _ => None,
+                }
+            }
+
+            /// The primary currency for the given country, if there is one.
+            pub const fn from_alpha2_country(value: iso3166_static::Alpha2) -> Option<Self> {
+                match value {
+                    #(
+                        iso3166_static::Alpha2::#country_ident => Some(Self::#currency_ident),
+                    )*
+
+                    _ => None,
+                }
+            }
+
+            /// The primary currency for the given country, if there is one.
+            pub const fn from_alpha3_country(value: iso3166_static::Alpha3) -> Option<Self> {
+                match value {
+                    #(
+                        iso3166_static::Alpha3::#country_ident => Some(Self::#currency_ident),
+                    )*
+
+                    _ => None,
                 }
             }
         }

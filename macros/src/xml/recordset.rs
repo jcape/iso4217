@@ -35,43 +35,91 @@ pub(crate) struct EntrySet {
     /// The number of decimal places in the minor unit.
     minor_unit: Vec<TokenStream>,
 
-    /// A list of country names indexed by the numeric code of the currency they use.
-    countries_by_number: BTreeMap<u16, BTreeSet<String>>,
+    /// The iso3166 country identifier.
+    country_ident: Vec<Ident>,
+
+    /// Currency number by country ident.
+    currency_ident: Vec<Ident>,
 }
+
+const NON_COUNTRIES: &[&str] = &[
+    "ArabMonetaryFund",
+    "EuropeanUnion",
+    "InternationalMonetaryFundImf",
+    "MemberCountriesOfTheAfricanDevelopmentBankGroup",
+    "SistemaUnitarioDeCompensacionRegionalDePagosSucre",
+];
 
 impl EntrySet {
     /// Build an entry set from a slice of entries
     pub(crate) fn from_entries(entries: &[CurrencyEntry]) -> Self {
         let mut retval = Self::default();
 
+        // collect a map of country strings to currency numbers
+        let mut country_to_currency = BTreeMap::new();
+
+        // Previously seen numbers.
+        let mut numbers = BTreeSet::default();
+
         for entry in entries {
             if let Some(currency) = entry.currency()
                 && let Some(number) = entry.number()
                 && let Some(name) = entry.name()
             {
-                let mut is_new = false;
+                let id = currency.trim().to_pascal_case();
+                assert!(
+                    id.is_ascii(),
+                    "Invalid non-ASCII enum variant: {id} {number}"
+                );
+                let ident = quote::format_ident!("{id}");
 
-                retval
-                    .countries_by_number
-                    .entry(number)
-                    .and_modify(|countries| {
-                        countries.insert(entry.country().to_owned());
-                    })
-                    .or_insert_with(|| {
-                        is_new = true;
-                        BTreeSet::from_iter([entry.country().to_owned()])
-                    });
+                let country_id = entry
+                    .country()
+                    .replace("(THE)", "")
+                    .replace("(PLURINATIONAL STATE OF)", "")
+                    .trim()
+                    .to_pascal_case()
+                    .replace("ÅlandIslands", "AlandIslands")
+                    .replace("CôteDIvoire", "CoteDIvoire")
+                    .replace("Curaçao", "Curacao")
+                    .replace(
+                        "CongoTheDemocraticRepublicOfThe",
+                        "DemocraticRepublicOfTheCongo",
+                    )
+                    .replace("IranIslamicRepublicOf", "Iran")
+                    .replace("KoreaTheDemocraticPeopleSRepublicOf", "NorthKorea")
+                    .replace("KoreaTheRepublicOf", "SouthKorea")
+                    .replace("LaoPeopleSDemocraticRepublic", "Laos")
+                    .replace("MicronesiaFederatedStatesOf", "Micronesia")
+                    .replace("MoldovaTheRepublicOf", "Moldova")
+                    .replace("Réunion", "Reunion")
+                    .replace("RussianFederation", "Russia")
+                    .replace("SaintBarthélemy", "SaintBarthelemy")
+                    .replace("SyrianArabRepublic", "Syria")
+                    .replace("TaiwanProvinceOfChina", "Taiwan")
+                    .replace("TanzaniaUnitedRepublicOf", "Tanzania")
+                    .replace(
+                        "UnitedKingdomOfGreatBritainAndNorthernIreland",
+                        "UnitedKingdom",
+                    )
+                    .replace("Türki̇ye", "Turkey")
+                    .replace("VenezuelaBolivarianRepublicOf", "Venezuela")
+                    .replace("VirginIslandsBritish", "BritishVirginIslands");
+                assert!(
+                    country_id.is_ascii(),
+                    "Invalid non-ASCII enum variant: {country_id} {number}"
+                );
 
-                if is_new {
+                if !country_id.starts_with("Zz")
+                    && !NON_COUNTRIES.iter().any(|&val| val == country_id)
+                {
+                    let country_ident = Ident::new(&country_id, Span::mixed_site());
+                    country_to_currency.insert(country_ident, ident.clone());
+                }
+
+                if numbers.insert(number) {
                     let fund_str = if name.is_fund() { ", Fund" } else { "" };
-
                     let doc = format!(" {} ({currency}, {number}{fund_str})", name.name());
-                    let id = currency.trim().to_pascal_case();
-                    assert!(
-                        id.is_ascii(),
-                        "Invalid non-ASCII enum variant: {id} {number}"
-                    );
-                    let ident = quote::format_ident!("{id}");
                     let minor_unit = if let Some(unit) = entry.minor_unit() {
                         quote::quote! { Some(#unit) }
                     } else {
@@ -90,6 +138,11 @@ impl EntrySet {
                     retval.minor_unit.push(minor_unit);
                 }
             }
+        }
+
+        for (country_ident, currency_ident) in country_to_currency {
+            retval.country_ident.push(country_ident);
+            retval.currency_ident.push(currency_ident);
         }
 
         retval
@@ -134,6 +187,22 @@ impl EntrySet {
     pub(crate) fn name(&self) -> &[String] {
         &self.name
     }
+
+    /// A country identifier.
+    ///
+    /// This starts a separately indexed set of fields, alongside `currency_ident`. In particular,
+    /// this field must match one of the enum variants from `iso3166-static`.
+    pub(crate) fn country_ident(&self) -> &[Ident] {
+        &self.country_ident
+    }
+
+    /// A currency identifier.
+    ///
+    /// This starts a separately indexed set of fields, alongside `country_ident`. In particular,
+    /// this field will contain the Country code identifier for this currency.
+    pub(crate) fn currency_ident(&self) -> &[Ident] {
+        &self.currency_ident
+    }
 }
 
 impl Debug for EntrySet {
@@ -147,7 +216,8 @@ impl Debug for EntrySet {
             .field("name", &self.name)
             .field("is_fund", &self.is_fund)
             .field("minor_unit", &self.minor_unit)
-            .field("countries_by_number", &self.countries_by_number)
+            .field("country_ident", &self.country_ident)
+            .field("currency_ident", &self.currency_ident)
             .finish()
     }
 }
