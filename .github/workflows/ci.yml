@@ -154,6 +154,9 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: llvm-tools-preview
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: llvm-tools-preview
       - uses: taiki-e/install-action@cargo-llvm-cov
       - uses: taiki-e/install-action@cargo-nextest
       - name: Run tests with coverage
@@ -164,7 +167,7 @@ jobs:
             --all-features \
             --profile ci \
             --hide-progress-bar
-          cargo llvm-cov \
+          cargo +nightly llvm-cov \
             --no-report \
             --workspace \
             --doc
