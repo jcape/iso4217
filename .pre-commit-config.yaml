@@ -57,6 +57,10 @@ repos:
         args:
           - '--all'
           - '--'
+      - id: test
+        args:
+          - '--workspace'
+          - '--docs'
       - id: clippy
         args:
           - '--workspace'
