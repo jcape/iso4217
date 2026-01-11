@@ -10,7 +10,7 @@ iso4217-parser = { path = "./parser", version = "=0.1.0", default-features = fal
 iso4217-static = { path = "./static", version = "=0.1.0", default-features = false }
 serde = { version = "1", default-features = false, features = ["derive"] }
 serde_json = "1"
-quick-xml = { version = "0.38", features = ["serialize"] }
+quick-xml = { version = "0.39.0", features = ["serialize"] }
 
 [workspace.lints.clippy]
 cargo = "deny"
