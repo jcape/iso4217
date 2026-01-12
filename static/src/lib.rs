@@ -110,18 +110,27 @@ mod test {
                 && let Ok(alpha2) = Alpha2::from_numeric(numeric)
                 && let Ok(alpha3) = Alpha3::from_numeric(numeric)
             {
-                let numeric_currency = Currency::from_numeric_country(numeric);
-                let alpha2_currency = Currency::from_alpha2_country(alpha2);
-                let alpha3_currency = Currency::from_alpha3_country(alpha3);
+                let numeric_currency = Currency::try_from(numeric);
+                let alpha2_currency = Currency::try_from(alpha2);
+                let alpha3_currency = Currency::try_from(alpha3);
 
                 if NO_CURRENCY.contains(&numeric) {
-                    assert!(numeric_currency.is_none());
-                    assert!(alpha2_currency.is_none());
-                    assert!(alpha3_currency.is_none());
+                    assert_eq!(
+                        Error::NoUniversalCurrency,
+                        numeric_currency.expect_err("no currency")
+                    );
+                    assert_eq!(
+                        Error::NoUniversalCurrency,
+                        alpha2_currency.expect_err("no currency")
+                    );
+                    assert_eq!(
+                        Error::NoUniversalCurrency,
+                        alpha3_currency.expect_err("no currency")
+                    );
                 } else {
-                    assert!(numeric_currency.is_some());
-                    assert!(alpha2_currency.is_some());
-                    assert!(alpha3_currency.is_some());
+                    assert!(numeric_currency.is_ok());
+                    assert!(alpha2_currency.is_ok());
+                    assert!(alpha3_currency.is_ok());
                 }
             }
         }
