@@ -60,7 +60,8 @@ repos:
       - id: test
         args:
           - '--workspace'
-          - '--docs'
+          - '--all-features'
+          - '--doc'
       - id: clippy
         args:
           - '--workspace'
