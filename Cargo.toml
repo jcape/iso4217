@@ -4,7 +4,7 @@ members = ["macros", "parser", "static"]
 exclude = [".cache"]
 
 [workspace.dependencies]
-chrono = { version = "0.4", default-features = false }
+chrono = { version = "0.4.42", default-features = false }
 iso4217-macros = { path = "./macros", version = "=0.2.0", default-features = false }
 iso4217-parser = { path = "./parser", version = "=0.2.0", default-features = false }
 iso4217-static = { path = "./static", version = "=0.2.0", default-features = false }
