@@ -70,7 +70,11 @@ impl EntrySet {
                     .name()
                     .trim()
                     .to_pascal_case()
-                    .replace("BolívarSoberano", "BolivarSoberano");
+                    .replace("BolívarSoberano", "BolivarSoberano")
+                    .replace(
+                        "TheCodesAssignedForTransactionsWhereNoCurrencyIsInvolved",
+                        "NoCurrency",
+                    );
 
                 // cleanup bad data
                 if id == "BolivarSoberano" && currency == "VED" {
