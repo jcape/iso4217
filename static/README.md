@@ -12,11 +12,10 @@ The enumeration can be created from the three-character currency code:
 
 ```rust
 use iso4217_static::Currency;
-use std::str::FromStr;
 
 const CURRENCY: &str = "USD";
 
-let actual = Currency::from_str(CURRENCY).expect("valid code");
+let actual = Currency::try_from(CURRENCY).expect("valid code");
 assert_eq!(Currency::UsDollar, actual);
 assert_eq!(CURRENCY, actual.as_ref());
 ```
@@ -25,7 +24,6 @@ Numeric codes are also supported:
 
 ```rust
 use iso4217_static::Currency;
-use std::str::FromStr;
 
 const CURRENCY: u16 = 840;
 
@@ -40,7 +38,6 @@ the country has one):
 ```rust
 use iso3166_static::Alpha2;
 use iso4217_static::Currency;
-use std::str::FromStr;
 
 let actual = Currency::try_from(Alpha2::UnitedStatesOfAmerica).expect("country");
 assert_eq!(Currency::UsDollar, actual);
