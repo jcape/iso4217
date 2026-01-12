@@ -52,4 +52,4 @@ assert_eq!(Currency::UsDollar, actual);
 [crate-link]: https://crates.io/crates/iso4217-static/0.2.1
 [docs-image]: https://img.shields.io/docsrs/iso4217-static?style=for-the-badge
 [docs-link]: https://docs.rs/crate/iso4217-static/0.2.1/iso4217_static
-[msrv-image]: https://img.shields.io/crates/msrv/iso4217-parser/0.2.0?style=for-the-badge
+[msrv-image]: https://img.shields.io/crates/msrv/iso4217-static/0.2.1?style=for-the-badge
