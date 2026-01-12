@@ -66,7 +66,17 @@ impl EntrySet {
                 && let Some(number) = entry.number()
                 && let Some(name) = entry.name()
             {
-                let id = currency.trim().to_pascal_case();
+                let mut id = name
+                    .name()
+                    .trim()
+                    .to_pascal_case()
+                    .replace("BolívarSoberano", "BolivarSoberano");
+
+                // cleanup bad data
+                if id == "BolivarSoberano" && currency == "VED" {
+                    id.clear();
+                    id.push_str("BolivarDigital");
+                }
                 assert!(
                     id.is_ascii(),
                     "Invalid non-ASCII enum variant: {id} {number}"
@@ -112,6 +122,7 @@ impl EntrySet {
 
                 if !country_id.starts_with("Zz")
                     && !NON_COUNTRIES.iter().any(|&val| val == country_id)
+                    && !name.is_fund()
                 {
                     let country_ident = Ident::new(&country_id, Span::mixed_site());
                     country_to_currency.insert(country_ident, ident.clone());
