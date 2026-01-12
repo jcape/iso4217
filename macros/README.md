@@ -13,8 +13,8 @@ As an end-user, this probably isn't the crate you're looking for, you probably w
 
 [license-image]: https://img.shields.io/github/license/jcape/iso4217?style=for-the-badge
 [crate-image]: https://img.shields.io/crates/v/iso4217-macros.svg?style=for-the-badge
-[crate-link]: https://crates.io/crates/iso4217-macros/0.1.0
+[crate-link]: https://crates.io/crates/iso4217-macros/0.2.0
 [docs-image]: https://img.shields.io/docsrs/iso4217-macros?style=for-the-badge
-[docs-link]: https://docs.rs/crate/iso4217-macros/0.1.0/iso4217_macros
-[deps-image]: https://deps.rs/crate/iso4217-macros/0.1.0/status.svg?style=for-the-badge
-[deps-link]: https://deps.rs/crate/iso4217-macros/0.1.0
+[docs-link]: https://docs.rs/crate/iso4217-macros/0.2.0/iso4217_macros
+[deps-image]: https://deps.rs/crate/iso4217-macros/0.2.0/status.svg?style=for-the-badge
+[deps-link]: https://deps.rs/crate/iso4217-macros/0.2.0
