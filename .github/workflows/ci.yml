@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@1.88.0
         with:
           components: rustfmt
       - uses: r7kamura/rust-problem-matchers@v1
@@ -53,7 +53,7 @@ jobs:
           cache-on-failure: "true"
       - uses: EmbarkStudios/cargo-deny-action@v2
         with:
-          rust-version: "1.87.0"
+          rust-version: "1.88.0"
           command: check ${{ matrix.check }}
 
   clippy:
@@ -61,7 +61,7 @@ jobs:
     strategy:
       matrix:
         rust:
-          - stable
+          - 1.88.0
           - beta
     # Prevent beta warnings from causing CI failure
     continue-on-error: ${{ matrix.rust == 'beta' }}
@@ -82,7 +82,7 @@ jobs:
     strategy:
       matrix:
         rust:
-          - stable
+          - 1.88.0
           - beta
         features:
           - none
@@ -114,7 +114,7 @@ jobs:
     strategy:
       matrix:
         rust:
-          - stable
+          - 1.88.0
           - beta
     # Prevent beta warnings from causing CI failure
     continue-on-error: ${{ matrix.rust == 'beta' }}
@@ -135,7 +135,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@1.88.0
       - uses: taiki-e/install-action@cargo-nextest
       - run: |
           cargo nextest run \
@@ -154,7 +154,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@1.88.0
         with:
           components: llvm-tools-preview
       - uses: dtolnay/rust-toolchain@nightly
