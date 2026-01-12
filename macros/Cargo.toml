@@ -2,7 +2,7 @@
 name = "iso4217-macros"
 authors.workspace = true
 categories = ["finance", "localization"]
-description = "Parser for ISO ISO4217 XML Data"
+description = "Procedural Macros for Generating ISO 4217 Data"
 documentation = "https://docs.rs/iso4217-macros"
 edition.workspace = true
 keywords = ["iso4217", "currency", "proc-macro"]

@@ -2,7 +2,7 @@
 name = "iso4217-parser"
 authors.workspace = true
 categories = ["data-structures", "finance", "parser-implementations"]
-description = "Parser for ISO ISO4217 XML Data"
+description = "Parser for ISO 4217 XML Data"
 documentation = "https://docs.rs/iso4217-parser"
 edition.workspace = true
 keywords = ["iso4217", "currency"]

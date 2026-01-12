@@ -2,7 +2,7 @@
 name = "iso4217-static"
 authors.workspace = true
 categories = ["finance", "localization", "no-std", "no-std::no-alloc"]
-description = "Parser for ISO ISO4217 XML Data"
+description = "Static ISO 4217 Data"
 documentation = "https://docs.rs/iso4217-static"
 edition.workspace = true
 keywords = ["iso4217", "currency"]
