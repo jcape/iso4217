@@ -9,7 +9,7 @@ mod _serde;
 use core::str::FromStr;
 use iso3166_static::{Alpha2, Alpha3, Numeric};
 
-iso4217_macros::generate!(xml = "list-one.xml");
+iso4217_macros::generate!(xml = "list-one.xml", zerocopy = true);
 
 impl Error {
     /// Whether this error is of the `InvalidCode` variant.

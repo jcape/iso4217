@@ -13,18 +13,23 @@ rust-version.workspace = true
 version.workspace = true
 
 [dependencies]
+cfg-if = "1"
 chrono.workspace = true
 iso3166-static = { version = "0.4.0", default-features = false }
 iso4217-macros.workspace = true
 serde = { workspace = true, optional = true, features = ["derive"] }
+zerocopy = { version = "0.8.21", optional = true, default-features = false, features = [
+    "derive",
+] }
 
 [build-dependencies]
 iso4217-macros.workspace = true
 
 [features]
 default = ["serde"]
-alloc = ["serde?/alloc", "iso3166-static/alloc"]
+alloc = ["iso3166-static/alloc", "serde?/alloc", "zerocopy?/alloc"]
 serde = ["dep:serde", "iso3166-static/serde"]
+zerocopy = ["dep:zerocopy"]
 
 [lints]
 workspace = true

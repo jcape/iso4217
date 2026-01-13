@@ -30,14 +30,23 @@ fn build_error() -> TokenStream {
 }
 
 /// Generate the currency code enum.
-fn build_enum(entryset: &EntrySet) -> TokenStream {
+fn build_enum(entryset: &EntrySet, zerocopy: Option<String>) -> TokenStream {
     let doc = entryset.doc();
     let id = entryset.ident();
     let num = entryset.number();
 
+    let zc_derive = if let Some(zc) = zerocopy {
+        quote::quote! {
+            #[cfg_attr(feature = #zc, derive(::zerocopy::TryFromBytes, ::zerocopy::IntoBytes))]
+        }
+    } else {
+        quote::quote! {}
+    };
+
     quote::quote! {
         /// ISO 4217 Currency Codes.
         #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+        #zc_derive
         #[non_exhaustive]
         #[repr(u16)]
         pub enum Currency {
@@ -171,7 +180,11 @@ pub(crate) fn try_generate(input: TokenStream) -> Result<TokenStream> {
         Error::new_spanned(&input, message)
     })?;
 
-    let Config { xml, span } = Punctuated::<Meta, Token![,]>::parse_terminated
+    let Config {
+        xml,
+        span,
+        zerocopy,
+    } = Punctuated::<Meta, Token![,]>::parse_terminated
         .parse2(input)
         .and_then(|args| Config::build(&manifest_dir, &args))?;
 
@@ -193,7 +206,7 @@ pub(crate) fn try_generate(input: TokenStream) -> Result<TokenStream> {
     let entryset = EntrySet::from_entries(&entries);
 
     let mut retval = build_error();
-    retval.extend(build_enum(&entryset));
+    retval.extend(build_enum(&entryset, zerocopy));
     retval.extend(build_impl(&entryset));
 
     Ok(retval)

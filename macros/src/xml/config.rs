@@ -9,15 +9,8 @@ pub(crate) struct Config {
     pub xml: PathBuf,
     /// The span of the xml file path.
     pub span: Span,
-}
-
-impl Default for Config {
-    fn default() -> Self {
-        Self {
-            xml: PathBuf::default(),
-            span: Span::call_site(),
-        }
-    }
+    /// The feature name to use for zerocopy.
+    pub zerocopy: Option<String>,
 }
 
 impl Config {
@@ -46,6 +39,32 @@ impl Config {
         Ok(())
     }
 
+    /// Parse the literal provided as a zerocopy string (or boolean to enable it)
+    fn parse_zerocopy(&mut self, lit: &Lit) -> Result<()> {
+        if self.zerocopy.is_some() {
+            return Err(Error::new_spanned(lit, "Multiple `zerocopy` parameters."));
+        }
+
+        match lit {
+            Lit::Bool(lit_bool) => {
+                if lit_bool.value() {
+                    self.zerocopy = Some("zerocopy".to_owned());
+                }
+            }
+            Lit::Str(lit_str) => {
+                self.zerocopy = Some(lit_str.value());
+            }
+            val => {
+                return Err(Error::new_spanned(
+                    val,
+                    "`zerocopy` must be a string-literal feature name",
+                ));
+            }
+        }
+
+        Ok(())
+    }
+
     /// Parse a namevalue token pair
     fn parse_namevalue(&mut self, manifest_dir: &str, tokens: &MetaNameValue) -> Result<()> {
         let ident = tokens
@@ -61,6 +80,7 @@ impl Config {
 
         match ident.as_str() {
             "xml" => self.parse_xml(manifest_dir, lit),
+            "zerocopy" => self.parse_zerocopy(lit),
             other => {
                 let message = format!(
                     "{other} is not a valid paramter. The only valid parameter is `xml`, which should refer to a file relative to the calling crate's `src` directory."
@@ -71,7 +91,11 @@ impl Config {
     }
 
     pub(crate) fn build(manifest_dir: &str, args: &Punctuated<Meta, Token![,]>) -> Result<Self> {
-        let mut retval = Config::default();
+        let mut retval = Self {
+            xml: PathBuf::default(),
+            span: Span::call_site(),
+            zerocopy: None,
+        };
 
         for arg in args {
             match arg {
@@ -79,8 +103,9 @@ impl Config {
                     return Err(Error::new_spanned(
                         tokens,
                         concat!(
-                            "The only valid parameter is `xml`, which should refer to a file ",
-                            "relative to the calling crate's `src` directory."
+                            "The only valid parameters are `xml`, which should refer to a file ",
+                            "relative to the calling crate's `src` directory, and `zerocopy`, ",
+                            "which should refer to the feature name for enabling zerocopy traits."
                         ),
                     ));
                 }
@@ -89,7 +114,8 @@ impl Config {
                         tokens,
                         concat!(
                             "The only valid parameter is `xml`, which should refer to a file ",
-                            "relative to the calling crate's `src` directory."
+                            "relative to the calling crate's `src` directory, and `zerocopy`, ",
+                            "which should refer to the feature name for enabling zerocopy traits."
                         ),
                     ));
                 }
