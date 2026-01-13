@@ -11,7 +11,7 @@ This crate provides a `no-std` and `no-std::no-alloc` capable enumeration of ISO
 - `default`: Enables the `serde` feature.
 - `serde`: Enables serialization/deserialization using `serde`.
 - `alloc`: Enables the use of allocated types (this should be enabled if `serde` is enabled).
-- `zerocopy`: Enables the derivation of [`zerocopy`](https://docs.rs/zerocopy) traits (specifically, [`TryFromBytes`](zeroize::TryFromBytes) and [`IntoBytes`](zeroize::IntoBytes)) on the `Currency` enum.
+- `zerocopy`: Enables the derivation of [`zerocopy`](https://docs.rs/zerocopy) traits (specifically, [`TryFromBytes`](zeroize::TryFromBytes) and [`IntoBytes`](zeroize::IntoBytes)) on the [`Currency`](crate::Currency) enum.
 
 ## Examples
 
