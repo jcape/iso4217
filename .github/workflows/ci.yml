@@ -62,6 +62,7 @@ jobs:
       matrix:
         rust:
           - 1.88.0
+          - stable
           - beta
     # Prevent beta warnings from causing CI failure
     continue-on-error: ${{ matrix.rust == 'beta' }}
@@ -83,6 +84,7 @@ jobs:
       matrix:
         rust:
           - 1.88.0
+          - stable
           - beta
         features:
           - none
@@ -115,6 +117,7 @@ jobs:
       matrix:
         rust:
           - 1.88.0
+          - stable
           - beta
     # Prevent beta warnings from causing CI failure
     continue-on-error: ${{ matrix.rust == 'beta' }}
@@ -133,9 +136,17 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust:
+          - 1.88.0
+          - stable
+          - beta
     steps:
       - uses: actions/checkout@v6
-      - uses: dtolnay/rust-toolchain@1.88.0
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
       - uses: taiki-e/install-action@cargo-nextest
       - run: |
           cargo nextest run \
