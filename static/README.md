@@ -1,10 +1,16 @@
-# Static ISO 4217 Data
+# Static ISO 4217 Currency Data
 
 [![Crates.io][crate-image]][crate-link]<!--
 -->[![Docs Status][docs-image]][docs-link]<!--
 -->![MSRV 1.88.0][msrv-image]
 
-This crate provides generated ISO 4217 data. The primary point is the [`Currency`] enum, which contains enumrated values for the distributed currencies.
+This crate provides a `no-std` and `no-std::no-alloc` capable enumeration of ISO 4217 Currency-code data, vis-a-vis the [`Currency`](crate::Currency) Rust enum. It requires Rust 1.88.0 or later, and MSRV updates are not considered breaking changes.
+
+## Features
+
+- `default`: Enables the `serde` feature.
+- `serde`: Enables serialization/deserialization using `serde`.
+- `alloc`: Enables the use of allocated types (this should be enabled if `serde` is enabled).
 
 ## Examples
 
