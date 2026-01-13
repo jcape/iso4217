@@ -53,6 +53,16 @@ repos:
   - repo: https://github.com/backplane/pre-commit-rust-hooks
     rev: v1.1.0
     hooks:
+      - id: check
+        args:
+          - '+stable'
+          - '--workspace'
+          - '--all-features'
+      - id: check
+        args:
+          - '+1.88.0'
+          - '--workspace'
+          - '--all-features'
       - id: fmt
         args:
           - '--all'

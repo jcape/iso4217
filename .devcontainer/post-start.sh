@@ -2,6 +2,7 @@
 
 rustup toolchain install nightly
 rustup toolchain install stable
+rustup component add --toolchain stable rustfmt
 
 mkdir -p /workspaces/iso4217/.cache/cargo
 ln -sf /usr/local/cargo/bin /workspaces/iso4217/.cache/cargo/
