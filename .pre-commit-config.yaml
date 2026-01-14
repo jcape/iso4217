@@ -13,7 +13,7 @@ exclude: |-
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-shebang-scripts-are-executable
       - id: check-vcs-permalinks
@@ -29,18 +29,18 @@ repos:
       - id: mixed-line-ending
       - id: trailing-whitespace
   - repo: https://github.com/compilerla/conventional-pre-commit
-    rev: v4.0.0
+    rev: v4.3.0
     hooks:
       - id: conventional-pre-commit
         stages: [commit-msg]
         args: []
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.18.1
+    rev: v0.20.0
     hooks:
       - id: markdownlint-cli2
         language_version: lts
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.35.1
+    rev: v1.38.0
     hooks:
       - id: yamllint
   - repo: https://github.com/mpalmer/action-validator
@@ -48,7 +48,7 @@ repos:
     hooks:
       - id: action-validator
   - repo: https://github.com/EmbarkStudios/cargo-deny
-    rev: 0.18.9
+    rev: 0.19.0
     hooks:
       - id: cargo-deny
         args: ["--all-features", "check"]
