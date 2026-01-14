@@ -55,6 +55,7 @@ repos:
   - repo: local
     hooks:
       - id: cargo-fmt
+        stages: [pre-commit]
         name: cargo +stable fmt
         description: unit test for the project
         entry: bash -c 'cargo +stable fmt --workspace --'
@@ -62,6 +63,7 @@ repos:
         files: \.rs$
         pass_filenames: true
       - id: clippy-fix
+        stages: [pre-commit]
         name: cargo +stable clippy
         description: clippy fix
         # yamllint disable-line rule:line-length
@@ -70,6 +72,7 @@ repos:
         files: \.rs$
         pass_filenames: false
       - id: clippy-check
+        stages: [pre-commit]
         name: cargo +stable clippy
         description: cargo clippy check
         # yamllint disable-line rule:line-length
@@ -78,6 +81,7 @@ repos:
         files: \.rs$
         pass_filenames: false
       - id: cargo-nextest
+        stages: [pre-commit]
         name: cargo nextest
         description: unit test for the project
         entry: bash -c 'cargo +1.88.0 nextest run --workspace --all-features'
@@ -85,6 +89,7 @@ repos:
         files: \.rs$
         pass_filenames: false
       - id: cargo-nextest
+        stages: [pre-commit]
         name: cargo nextest
         description: doctests for the project
         entry: bash -c 'cargo +1.88.0 test --workspace --all-features --doc'
