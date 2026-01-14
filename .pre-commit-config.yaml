@@ -88,9 +88,9 @@ repos:
         language: rust
         files: \.rs$
         pass_filenames: false
-      - id: cargo-nextest
+      - id: cargo-doctest
         stages: [pre-commit]
-        name: cargo nextest
+        name: cargo doctest
         description: doctests for the project
         entry: bash -c 'cargo +1.88.0 test --workspace --all-features --doc'
         language: rust
