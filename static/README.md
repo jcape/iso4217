@@ -53,7 +53,7 @@ assert_eq!(Currency::UsDollar, actual);
 [//]: # (badges)
 
 [crate-image]: https://img.shields.io/crates/v/iso4217-static.svg?style=for-the-badge
-[crate-link]: https://crates.io/crates/iso4217-static/0.2.1
+[crate-link]: https://crates.io/crates/iso4217-static/0.2.2
 [docs-image]: https://img.shields.io/docsrs/iso4217-static?style=for-the-badge
-[docs-link]: https://docs.rs/crate/iso4217-static/0.2.1/iso4217_static
-[msrv-image]: https://img.shields.io/crates/msrv/iso4217-static/0.2.1?style=for-the-badge
+[docs-link]: https://docs.rs/crate/iso4217-static/0.2.2/iso4217_static
+[msrv-image]: https://img.shields.io/crates/msrv/iso4217-static/0.2.2?style=for-the-badge
