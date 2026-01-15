@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.2](https://github.com/jcape/iso4217/compare/iso4217-static-v0.2.1...iso4217-static-v0.2.2) - 2026-01-15
+
+### Added
+
+- add zerocopy feature
+
+### Other
+
+- fix links
+- fix currency link in readme
+- document zerocopy feature
+- flesh out the readme a bit more, doc features
+- cleanup imports in examples.
+- fix msrv image in static readme.
+
 ## [0.2.1](https://github.com/jcape/iso4217/compare/iso4217-static-v0.2.0...iso4217-static-v0.2.1) - 2026-01-12
 
 ### Other
