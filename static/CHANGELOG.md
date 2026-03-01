@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.3](https://github.com/jcape/iso4217/compare/iso4217-static-v0.2.2...iso4217-static-v0.2.3) - 2026-03-01
+
+### Added
+
+- implement serde
+
+### Fixed
+
+- correct alloc inclusion
+
 ## [0.2.2](https://github.com/jcape/iso4217/compare/iso4217-static-v0.2.1...iso4217-static-v0.2.2) - 2026-01-15
 
 ### Added
