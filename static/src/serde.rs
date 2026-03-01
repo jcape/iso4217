@@ -1,6 +1,13 @@
 //! Serde support for ISO 4217.
 
+#[cfg(feature = "alloc")]
+extern crate alloc;
+
 use crate::{Currency, Error};
+#[cfg(feature = "alloc")]
+use alloc::string::String;
+#[cfg(feature = "alloc")]
+use alloc::vec::Vec;
 use core::fmt::{Formatter, Result as FmtResult};
 use serde::de::{Error as DeError, Unexpected, Visitor};
 
@@ -181,7 +188,7 @@ impl<'de> Visitor<'de> for CurrencyVisitor {
     }
 
     #[cfg(feature = "alloc")]
-    fn visit_string<E: DeError>(self, v: ::alloc::string::String) -> Result<Self::Value, E> {
+    fn visit_string<E: DeError>(self, v: String) -> Result<Self::Value, E> {
         self.visit_str(&v)
     }
 
@@ -217,7 +224,7 @@ impl<'de> Visitor<'de> for CurrencyVisitor {
     }
 
     #[cfg(feature = "alloc")]
-    fn visit_byte_buf<E: DeError>(self, v: ::alloc::vec::Vec<u8>) -> Result<Self::Value, E> {
+    fn visit_byte_buf<E: DeError>(self, v: Vec<u8>) -> Result<Self::Value, E> {
         self.visit_bytes(&v)
     }
 }

@@ -3,9 +3,6 @@
 #![doc = include_str!("../README.md")]
 #![no_std]
 
-#[cfg(feature = "alloc")]
-extern crate alloc;
-
 #[cfg(feature = "serde")]
 pub mod serde;
 
