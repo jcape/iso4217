@@ -3,8 +3,7 @@
 mod config;
 mod recordset;
 
-use self::config::Config;
-use crate::xml::recordset::EntrySet;
+use crate::xml::{config::Config, recordset::EntrySet};
 use iso4217_parser::{CurrencyDoc, CurrencyEntry};
 use proc_macro2::TokenStream;
 use quick_xml::de;

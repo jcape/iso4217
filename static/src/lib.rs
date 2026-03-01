@@ -3,8 +3,11 @@
 #![doc = include_str!("../README.md")]
 #![no_std]
 
+#[cfg(feature = "alloc")]
+extern crate alloc;
+
 #[cfg(feature = "serde")]
-mod _serde;
+pub mod serde;
 
 use core::str::FromStr;
 use iso3166_static::{Alpha2, Alpha3, Numeric};

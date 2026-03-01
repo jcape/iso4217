@@ -17,10 +17,14 @@ cfg-if = "1"
 chrono.workspace = true
 iso3166-static = { version = "0.4.0", default-features = false }
 iso4217-macros.workspace = true
-serde = { workspace = true, optional = true, features = ["derive"] }
+serde = { workspace = true, optional = true }
 zerocopy = { version = "0.8.21", optional = true, default-features = false, features = [
     "derive",
 ] }
+
+[dev-dependencies]
+serde = { workspace = true, features = ["alloc", "derive"] }
+serde_json = "1"
 
 [build-dependencies]
 iso4217-macros.workspace = true
