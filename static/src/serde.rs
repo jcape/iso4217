@@ -43,6 +43,7 @@ pub mod str {
     /// # Errors
     ///
     /// - Returns an error if there is a problem deserializing the value.
+    #[inline]
     pub fn deserialize<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Currency, D::Error> {
         deserializer.deserialize_any(CurrencyVisitor)
     }
@@ -52,6 +53,7 @@ pub mod str {
     /// # Errors
     ///
     /// - Returns an error if there is a problem serializing the value.
+    #[inline]
     pub fn serialize<S: Serializer>(value: &Currency, serializer: S) -> Result<S::Ok, S::Error> {
         value.as_str().serialize(serializer)
     }
@@ -91,6 +93,7 @@ pub mod u16 {
     /// # Errors
     ///
     /// - Returns an error if there is a problem deserializing the value.
+    #[inline]
     pub fn deserialize<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Currency, D::Error> {
         deserializer.deserialize_any(CurrencyVisitor)
     }
@@ -100,6 +103,7 @@ pub mod u16 {
     /// # Errors
     ///
     /// - Returns an error if there is a problem serializing the value.
+    #[inline]
     pub fn serialize<S: Serializer>(value: &Currency, serializer: S) -> Result<S::Ok, S::Error> {
         (*value as u16).serialize(serializer)
     }
@@ -111,8 +115,8 @@ struct CurrencyVisitor;
 impl<'de> Visitor<'de> for CurrencyVisitor {
     type Value = Currency;
 
-    fn expecting(&self, f: &mut Formatter<'_>) -> FmtResult {
-        f.write_str("a valid currency value")
+    fn expecting(&self, formatter: &mut Formatter<'_>) -> FmtResult {
+        formatter.write_str("a valid currency value")
     }
 
     fn visit_i16<E: DeError>(self, v: i16) -> Result<Self::Value, E> {

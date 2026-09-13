@@ -15,7 +15,7 @@ version.workspace = true
 [dependencies]
 cfg-if = "1"
 chrono.workspace = true
-iso3166-static = { version = "0.4.0", default-features = false }
+iso3166-static = { version = "0.4.2", default-features = false }
 iso4217-macros.workspace = true
 serde = { workspace = true, optional = true }
 zerocopy = { version = "0.8.21", optional = true, default-features = false, features = [

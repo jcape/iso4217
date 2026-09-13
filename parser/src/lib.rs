@@ -1,11 +1,11 @@
-//! ISO 4217 XML Parser
+//! ISO 4217 XML Parser.
 
-#![doc = include_str!("../README.md")]
+#![cfg_attr(doc, doc = include_str!("../README.md"))]
 
 use chrono::{NaiveDate, ParseResult};
 use serde::{Deserialize, Serialize};
 
-/// The currency document
+/// The currency document.
 #[derive(Clone, Debug, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub struct CurrencyDoc {
     /// The table of currency entries.
@@ -19,6 +19,7 @@ pub struct CurrencyDoc {
 
 impl CurrencyDoc {
     /// The table contained within this document.
+    #[inline]
     #[must_use]
     pub fn table(&self) -> &CurrencyTable {
         &self.table
@@ -30,12 +31,13 @@ impl CurrencyDoc {
     ///
     /// - [`ParseError`](chrono::format::ParseError) when the date string is not in the format
     ///   `YYYY-MM-DD`.
+    #[inline]
     pub fn published(&self) -> ParseResult<NaiveDate> {
         NaiveDate::parse_from_str(&self.published, "%Y-%m-%d")
     }
 }
 
-/// The currency table
+/// The currency table.
 #[derive(Clone, Debug, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub struct CurrencyTable {
     /// The individual currency entries.
@@ -45,13 +47,14 @@ pub struct CurrencyTable {
 
 impl CurrencyTable {
     /// Retrieve a slice of the entries in this table.
+    #[inline]
     #[must_use]
     pub fn entries(&self) -> &[CurrencyEntry] {
         &self.entries
     }
 }
 
-/// An Currency XML Entry
+/// An Currency XML Entry.
 #[derive(Clone, Debug, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub struct CurrencyEntry {
     /// The name of the country.
@@ -77,12 +80,14 @@ pub struct CurrencyEntry {
 
 impl CurrencyEntry {
     /// The country name.
+    #[inline]
     #[must_use]
     pub fn country(&self) -> &str {
         self.country.trim()
     }
 
     /// The currency name.
+    #[inline]
     #[must_use]
     pub fn name(&self) -> Option<&CurrencyName> {
         self.name.as_ref()
@@ -91,18 +96,21 @@ impl CurrencyEntry {
     /// The currency code.
     ///
     /// This may be optional if the given country doesn't have universal currency.
+    #[inline]
     #[must_use]
     pub fn currency(&self) -> Option<&str> {
         self.currency.as_deref().map(str::trim)
     }
 
     /// Retrieve the currency code as a number.
+    #[inline]
     #[must_use]
     pub fn number(&self) -> Option<u16> {
         self.number
     }
 
     /// Retrieve the minor unit decimal places, if applicable.
+    #[inline]
     #[must_use]
     pub fn minor_unit(&self) -> Option<u8> {
         self.minor_unit.as_deref().and_then(|mu| match mu.trim() {
@@ -112,7 +120,7 @@ impl CurrencyEntry {
     }
 }
 
-/// A currency name
+/// A currency name.
 #[derive(Clone, Debug, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub struct CurrencyName {
     /// Whether the currency is a fund or not.
@@ -126,12 +134,14 @@ pub struct CurrencyName {
 
 impl CurrencyName {
     /// Whether the currency is a fund or not.
+    #[inline]
     #[must_use]
     pub fn is_fund(&self) -> bool {
         self.is_fund.unwrap_or_default()
     }
 
     /// The (trimmed) currency name.
+    #[inline]
     #[must_use]
     pub fn name(&self) -> &str {
         self.name.trim()

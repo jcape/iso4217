@@ -16,10 +16,10 @@ version.workspace = true
 chrono = { workspace = true, features = ["std", "serde"] }
 heck = "0.5"
 iso4217-parser.workspace = true
-proc-macro2 = "1"
-quote = "1"
+proc-macro2 = "1.0.107"
+quote = "1.0.47"
 serde = { workspace = true, features = ["derive"] }
-syn = { version = "2", features = ["full", "fold"] }
+syn = { version = "3", features = ["full", "fold"] }
 quick-xml.workspace = true
 
 [lib]

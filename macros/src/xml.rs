@@ -1,4 +1,4 @@
-//! XML Generation
+//! XML Generation.
 
 mod config;
 mod recordset;
@@ -10,6 +10,8 @@ use quick_xml::de;
 use std::{env, fs::File, io::BufReader};
 use syn::{Error, Meta, Result, Token, parse::Parser, punctuated::Punctuated};
 
+/// Construct the error enum token.
+#[expect(clippy::single_call_fn, reason = "Clean code.")]
 fn build_error() -> TokenStream {
     quote::quote! {
         /// Errors encountered when interacting ISO 4217 currency codes.
@@ -29,6 +31,7 @@ fn build_error() -> TokenStream {
 }
 
 /// Generate the currency code enum.
+#[expect(clippy::single_call_fn, reason = "Clean code.")]
 fn build_enum(entryset: &EntrySet, zerocopy: Option<String>) -> TokenStream {
     let doc = entryset.doc();
     let id = entryset.ident();
@@ -57,6 +60,8 @@ fn build_enum(entryset: &EntrySet, zerocopy: Option<String>) -> TokenStream {
     }
 }
 
+/// Build the implementation block for the currency enum.
+#[expect(clippy::too_many_lines, clippy::single_call_fn, reason = "Clean code.")]
 fn build_impl(entryset: &EntrySet) -> TokenStream {
     let currency = entryset.currency();
     let bytes = entryset.bytes();
@@ -71,6 +76,7 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
     quote::quote! {
         impl Currency {
             /// Try to derive a currency from the given numeric code.
+            #[inline]
             pub const fn from_u16(value: u16) -> Result<Self, Error> {
                 match value {
                     #(
@@ -82,6 +88,7 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
             }
 
             /// Try to derive a currency from the given ASCII string slice.
+            #[inline]
             pub const fn from_str_slice(value: &str) -> Result<Self, Error> {
                 if value.len() != 3 {
                     return Err(Error::InvalidLength);
@@ -101,6 +108,8 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
             }
 
             /// The string code for this currency value.
+            #[inline]
+            #[must_use]
             pub const fn as_str(&self) -> &'static str {
                 match self {
                     #(
@@ -110,6 +119,8 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
             }
 
             /// The name of this currency.
+            #[inline]
+            #[must_use]
             pub const fn name(&self) -> &'static str {
                 match self {
                     #(
@@ -119,6 +130,8 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
             }
 
             /// Whether this currency code represents a fund or not.
+            #[inline]
+            #[must_use]
             pub const fn is_fund(&self) -> bool {
                 match self {
                     #(
@@ -128,6 +141,8 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
             }
 
             /// The minor unit decimal place, if there is a minor unit.
+            #[inline]
+            #[must_use]
             pub const fn minor_unit(&self) -> Option<u8> {
                 match self {
                     #(
@@ -137,6 +152,8 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
             }
 
             /// The primary currency for the given country, if there is one.
+            #[inline]
+            #[must_use]
             pub const fn from_numeric_country(value: iso3166_static::Numeric) -> Option<Self> {
                 match value {
                     #(
@@ -148,6 +165,8 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
             }
 
             /// The primary currency for the given country, if there is one.
+            #[inline]
+            #[must_use]
             pub const fn from_alpha2_country(value: iso3166_static::Alpha2) -> Option<Self> {
                 match value {
                     #(
@@ -159,6 +178,8 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
             }
 
             /// The primary currency for the given country, if there is one.
+            #[inline]
+            #[must_use]
             pub const fn from_alpha3_country(value: iso3166_static::Alpha3) -> Option<Self> {
                 match value {
                     #(
@@ -172,7 +193,8 @@ fn build_impl(entryset: &EntrySet) -> TokenStream {
     }
 }
 
-/// Actual code generation
+/// Actual code generation. Fallible to produce errors.
+#[expect(clippy::single_call_fn, reason = "Clean code")]
 pub(crate) fn try_generate(input: TokenStream) -> Result<TokenStream> {
     let manifest_dir = env::var("CARGO_MANIFEST_DIR").map_err(|error| {
         let message = format!("CARGO_MANIFEST_DIR variable not found: {error}");

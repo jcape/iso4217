@@ -1,6 +1,6 @@
-//! Static ISO 4217 Data
+//! Static ISO 4217 Data.
 
-#![doc = include_str!("../README.md")]
+#![cfg_attr(doc, doc = include_str!("../README.md"))]
 #![no_std]
 
 #[cfg(feature = "serde")]
@@ -13,24 +13,28 @@ iso4217_macros::generate!(xml = "list-one.xml", zerocopy = true);
 
 impl Error {
     /// Whether this error is of the `InvalidCode` variant.
+    #[inline]
     #[must_use]
     pub const fn is_invalid_code(&self) -> bool {
         matches!(self, Self::InvalidCode)
     }
 
     /// Whether this error is of the `InvalidLength` variant.
+    #[inline]
     #[must_use]
     pub const fn is_invalid_length(&self) -> bool {
         matches!(self, Self::InvalidLength)
     }
 
     /// Whether this error is of the `InvalidCharset` variant.
+    #[inline]
     #[must_use]
     pub const fn is_invalid_charset(&self) -> bool {
         matches!(self, Self::InvalidCharset)
     }
 
     /// Whether this error is of the `InvalidCharset` variant.
+    #[inline]
     #[must_use]
     pub const fn is_no_universal_currency(&self) -> bool {
         matches!(self, Self::NoUniversalCurrency)
@@ -38,6 +42,7 @@ impl Error {
 }
 
 impl AsRef<str> for Currency {
+    #[inline]
     fn as_ref(&self) -> &str {
         self.as_str()
     }
@@ -46,6 +51,7 @@ impl AsRef<str> for Currency {
 impl FromStr for Currency {
     type Err = Error;
 
+    #[inline]
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Self::try_from(s)
     }
@@ -54,6 +60,7 @@ impl FromStr for Currency {
 impl TryFrom<u16> for Currency {
     type Error = Error;
 
+    #[inline]
     fn try_from(value: u16) -> Result<Self, Self::Error> {
         Self::from_u16(value)
     }
@@ -62,6 +69,7 @@ impl TryFrom<u16> for Currency {
 impl TryFrom<&str> for Currency {
     type Error = Error;
 
+    #[inline]
     fn try_from(value: &str) -> Result<Self, Self::Error> {
         Self::from_str_slice(value)
     }
@@ -70,6 +78,7 @@ impl TryFrom<&str> for Currency {
 impl TryFrom<Numeric> for Currency {
     type Error = Error;
 
+    #[inline]
     fn try_from(value: Numeric) -> Result<Self, Self::Error> {
         Self::from_numeric_country(value).ok_or(Error::NoUniversalCurrency)
     }
@@ -78,6 +87,7 @@ impl TryFrom<Numeric> for Currency {
 impl TryFrom<Alpha2> for Currency {
     type Error = Error;
 
+    #[inline]
     fn try_from(value: Alpha2) -> Result<Self, Self::Error> {
         Self::from_alpha2_country(value).ok_or(Error::NoUniversalCurrency)
     }
@@ -86,6 +96,7 @@ impl TryFrom<Alpha2> for Currency {
 impl TryFrom<Alpha3> for Currency {
     type Error = Error;
 
+    #[inline]
     fn try_from(value: Alpha3) -> Result<Self, Self::Error> {
         Self::from_alpha3_country(value).ok_or(Error::NoUniversalCurrency)
     }

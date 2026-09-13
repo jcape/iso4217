@@ -1,6 +1,6 @@
-//! Procedural Macros for Generating ISO 4217 Data
+//! Procedural Macros for Generating ISO 4217 Data.
 
-#![doc = include_str!("../README.md")]
+#![cfg_attr(doc, doc = include_str!("../README.md"))]
 
 mod xml;
 

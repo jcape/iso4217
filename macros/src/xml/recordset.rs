@@ -1,14 +1,15 @@
-//! Struct-of-Arrays data set
+//! Struct-of-Arrays data set.
 
 use heck::ToPascalCase;
 use iso4217_parser::CurrencyEntry;
 use proc_macro2::{Span, TokenStream};
 use std::{
     collections::{BTreeMap, BTreeSet},
-    fmt::Debug,
+    fmt::{Debug, Formatter, Result as FmtResult},
 };
 use syn::{Ident, LitByteStr};
 
+/// A set of data representing an entry in the resulting currency enum.
 #[derive(Clone, Default)]
 pub(crate) struct EntrySet {
     /// The documentation string.
@@ -42,6 +43,7 @@ pub(crate) struct EntrySet {
     currency_ident: Vec<Ident>,
 }
 
+/// Multinational currency issuers.
 const NON_COUNTRIES: &[&str] = &[
     "ArabMonetaryFund",
     "EuropeanUnion",
@@ -51,7 +53,8 @@ const NON_COUNTRIES: &[&str] = &[
 ];
 
 impl EntrySet {
-    /// Build an entry set from a slice of entries
+    /// Build an entry set from a slice of entries.
+    #[expect(clippy::single_call_fn, reason = "Clean code.")]
     pub(crate) fn from_entries(entries: &[CurrencyEntry]) -> Self {
         let mut retval = Self::default();
 
@@ -173,7 +176,7 @@ impl EntrySet {
         &self.ident
     }
 
-    /// The string value
+    /// The string value.
     pub(crate) fn currency(&self) -> &[String] {
         &self.currency
     }
@@ -221,7 +224,7 @@ impl EntrySet {
 }
 
 impl Debug for EntrySet {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         f.debug_struct("EntrySet")
             .field("doc", &self.doc)
             .field("ident", &self.ident)

@@ -1,11 +1,13 @@
-//! Configuration
+//! Configuration.
 
 use proc_macro2::Span;
 use std::path::PathBuf;
 use syn::{Error, Expr, ExprLit, Lit, Meta, MetaNameValue, Result, Token, punctuated::Punctuated};
 
+/// Configuration details for the XML-based generator.
+#[derive(Debug)]
 pub(crate) struct Config {
-    /// The path to the XML file
+    /// The path to the XML file.
     pub xml: PathBuf,
     /// The span of the xml file path.
     pub span: Span,
@@ -14,7 +16,7 @@ pub(crate) struct Config {
 }
 
 impl Config {
-    /// Parse the literal provided as a path to an XML file
+    /// Parse the literal provided as a path to an XML file.
     fn parse_xml(&mut self, manifest_dir: &str, lit: &Lit) -> Result<()> {
         if !self.xml.as_os_str().is_empty() {
             return Err(Error::new_spanned(lit, "Multiple `xml` parameters."));
@@ -39,7 +41,7 @@ impl Config {
         Ok(())
     }
 
-    /// Parse the literal provided as a zerocopy string (or boolean to enable it)
+    /// Parse the literal provided as a zerocopy string (or boolean to enable it).
     fn parse_zerocopy(&mut self, lit: &Lit) -> Result<()> {
         if self.zerocopy.is_some() {
             return Err(Error::new_spanned(lit, "Multiple `zerocopy` parameters."));
@@ -65,7 +67,7 @@ impl Config {
         Ok(())
     }
 
-    /// Parse a namevalue token pair
+    /// Parse a namevalue token pair.
     fn parse_namevalue(&mut self, manifest_dir: &str, tokens: &MetaNameValue) -> Result<()> {
         let ident = tokens
             .path
@@ -90,6 +92,8 @@ impl Config {
         }
     }
 
+    /// Build the configuration from a series of macro tokens.
+    #[expect(clippy::single_call_fn, reason = "Clean code.")]
     pub(crate) fn build(manifest_dir: &str, args: &Punctuated<Meta, Token![,]>) -> Result<Self> {
         let mut retval = Self {
             xml: PathBuf::default(),
