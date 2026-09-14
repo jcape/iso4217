@@ -7,7 +7,6 @@ documentation = "https://docs.rs/iso4217-macros"
 edition.workspace = true
 keywords = ["iso4217", "currency", "proc-macro"]
 license.workspace = true
-readme = "README.md"
 repository.workspace = true
 rust-version.workspace = true
 version.workspace = true

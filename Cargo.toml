@@ -7,9 +7,7 @@ exclude = [".cache"]
 chrono = { version = "0.4.42", default-features = false }
 iso4217-macros = { path = "./macros", version = "=0.2.3", default-features = false }
 iso4217-parser = { path = "./parser", version = "=0.2.3", default-features = false }
-iso4217-static = { path = "./static", version = "=0.2.3", default-features = false }
 serde = { version = "1.0.229", default-features = false, features = ["derive"] }
-serde_json = "1"
 quick-xml = { version = "0.42", features = ["serialize"] }
 
 [workspace.lints.clippy]
@@ -85,9 +83,7 @@ tag-name = "v{{version}}"
 [workspace.package]
 authors = ["James Cape <jamescape777@pm.me>"]
 edition = "2024"
-homepage = "https://github.com/jcape/iso4217"
 license = "Apache-2.0"
-readme = "README.md"
 repository = "https://github.com/jcape/iso4217"
 rust-version = "1.88.0"
 version = "0.2.3"

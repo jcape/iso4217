@@ -7,7 +7,6 @@ documentation = "https://docs.rs/iso4217-parser"
 edition.workspace = true
 keywords = ["iso4217", "currency"]
 license.workspace = true
-readme = "README.md"
 repository.workspace = true
 rust-version.workspace = true
 version.workspace = true
