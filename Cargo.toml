@@ -5,8 +5,8 @@ exclude = [".cache"]
 
 [workspace.dependencies]
 chrono = { version = "0.4.42", default-features = false }
-iso4217-macros = { path = "./macros", version = "=0.2.3", default-features = false }
-iso4217-parser = { path = "./parser", version = "=0.2.3", default-features = false }
+iso4217-macros = { path = "./macros", version = "=0.2.4", default-features = false }
+iso4217-parser = { path = "./parser", version = "=0.2.4", default-features = false }
 serde = { version = "1.0.229", default-features = false, features = ["derive"] }
 quick-xml = { version = "0.42", features = ["serialize"] }
 
@@ -86,7 +86,7 @@ edition = "2024"
 license = "Apache-2.0"
 repository = "https://github.com/jcape/iso4217"
 rust-version = "1.88.0"
-version = "0.2.3"
+version = "0.2.4"
 
 [profile.release]
 lto = true

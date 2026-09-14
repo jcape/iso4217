@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.4](https://github.com/jcape/iso4217/compare/iso4217-static-v0.2.3...iso4217-static-v0.2.4) - 2026-09-14
+
+### Fixed
+
+- *(docs)* fix unnecessary link issue
+- update syn to 3, stronger clippy lints
+
 ## [0.2.3](https://github.com/jcape/iso4217/compare/iso4217-static-v0.2.2...iso4217-static-v0.2.3) - 2026-03-01
 
 ### Added
