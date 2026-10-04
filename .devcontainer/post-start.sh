@@ -1,7 +1,6 @@
 #!/bin/bash
 
 rustup toolchain install nightly --profile default
-rustup toolchain install 1.88 --profile default --component rustfmt
 
 mkdir -p /workspaces/iso4217/.cache/cargo
 ln -sf /usr/local/cargo/bin /workspaces/iso4217/.cache/cargo/
