@@ -60,6 +60,8 @@
     "EDITOR": "code --reuse-window --wait",
     "PREK_HOME": "/workspaces/iso4217/.cache/prek"
   },
+  "workspaceFolder": "/workspaces/iso4217",
+  "workspaceMount": "source=${localWorkspaceFolder}/../,target=/workspaces,type=bind",
   "securityOpt": [
     "seccomp=unconfined"
   ],
