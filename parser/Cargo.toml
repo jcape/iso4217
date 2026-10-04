@@ -1,23 +1,23 @@
 [package]
-name = "iso4217-parser"
 authors.workspace = true
 categories = ["data-structures", "finance", "parser-implementations"]
 description = "Parser for ISO 4217 XML Data"
 documentation = "https://docs.rs/iso4217-parser"
 edition.workspace = true
-keywords = ["iso4217", "currency"]
+keywords = ["currency", "iso4217"]
 license.workspace = true
+name = "iso4217-parser"
 repository.workspace = true
 rust-version.workspace = true
 version.workspace = true
 
 [dependencies]
-chrono = { workspace = true, features = ["std", "serde"] }
-serde = { workspace = true, features = ["derive", "alloc"] }
+chrono = { workspace = true, features = ["serde", "std"] }
+serde = { workspace = true, features = ["alloc", "derive"] }
 
 [dev-dependencies]
-yare = "3"
 quick-xml.workspace = true
+yare = "3"
 
 [lints]
 workspace = true

@@ -1,12 +1,12 @@
 [package]
-name = "iso4217-static"
 authors.workspace = true
 categories = ["finance", "localization", "no-std", "no-std::no-alloc"]
 description = "Static ISO 4217 Data"
 documentation = "https://docs.rs/iso4217-static"
 edition.workspace = true
-keywords = ["iso4217", "currency"]
+keywords = ["currency", "iso4217"]
 license.workspace = true
+name = "iso4217-static"
 readme = "README.md"
 repository.workspace = true
 rust-version.workspace = true
@@ -30,8 +30,8 @@ serde_json = "1"
 iso4217-macros.workspace = true
 
 [features]
-default = ["serde"]
 alloc = ["iso3166-static/alloc", "serde?/alloc", "zerocopy?/alloc"]
+default = ["serde"]
 serde = ["dep:serde", "iso3166-static/serde"]
 zerocopy = ["dep:zerocopy"]
 
