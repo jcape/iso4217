@@ -14,15 +14,15 @@ version.workspace = true
 
 [dependencies]
 cfg-if = "1"
-iso3166-static = { version = "0.4.2", default-features = false }
+iso3166-static = { default-features = false, version = "0.4.2" }
 iso4217-macros.workspace = true
-serde = { workspace = true, optional = true }
-zerocopy = { version = "0.8.21", optional = true, default-features = false, features = [
-    "derive",
-] }
+serde = { optional = true, workspace = true }
+zerocopy = { default-features = false, features = [
+  "derive",
+], optional = true, version = "0.8.21" }
 
 [dev-dependencies]
-serde = { workspace = true, features = ["alloc", "derive"] }
+serde = { features = ["alloc", "derive"], workspace = true }
 serde_json = "1"
 
 [build-dependencies]
