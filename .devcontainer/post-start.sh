@@ -5,11 +5,12 @@ rustup toolchain install nightly --profile default
 mkdir -p /workspaces/iso4217/.cache/cargo
 ln -sf /usr/local/cargo/bin /workspaces/iso4217/.cache/cargo/
 
-cargo binstall -q -y --force prek
-cargo binstall -q -y --force action-validator
-cargo binstall -q -y --force cargo-deny
-cargo binstall -q -y --force cargo-nextest
-cargo binstall -q -y --force cargo-llvm-cov
+cargo binstall -q -y --force --locked prek
+cargo binstall -q -y --force --locked action-validator
+cargo binstall -q -y --force --locked cargo-deny
+cargo binstall -q -y --force --locked cargo-llvm-cov
+cargo binstall -q -y --force --locked cargo-nextest
+cargo binstall -q -y --force --locked cargo-no-std-check
 
 pushd /workspaces/iso4217 >/dev/null
 prek install -f >/dev/null
