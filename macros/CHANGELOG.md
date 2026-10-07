@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.5](https://github.com/jcape/iso4217/compare/iso4217-macros-v0.2.4...iso4217-macros-v0.2.5) - 2026-10-07
+
+### Added
+
+- use jiff instead of chrono
+
+### Other
+
+- add taplo configuration and format files
+
 ## [0.2.4](https://github.com/jcape/iso4217/compare/iso4217-macros-v0.2.3...iso4217-macros-v0.2.4) - 2026-09-14
 
 ### Fixed
