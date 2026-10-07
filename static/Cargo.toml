@@ -14,7 +14,6 @@ version.workspace = true
 
 [dependencies]
 cfg-if = "1"
-chrono.workspace = true
 iso3166-static = { version = "0.4.2", default-features = false }
 iso4217-macros.workspace = true
 serde = { workspace = true, optional = true }

@@ -2,7 +2,7 @@
 
 #![cfg_attr(doc, doc = include_str!("../README.md"))]
 
-use chrono::{NaiveDate, ParseResult};
+use jiff::civil::Date;
 use serde::{Deserialize, Serialize};
 
 /// The currency document.
@@ -29,11 +29,10 @@ impl CurrencyDoc {
     ///
     /// # Errors
     ///
-    /// - [`ParseError`](chrono::format::ParseError) when the date string is not in the format
-    ///   `YYYY-MM-DD`.
+    /// - [`Error`](jiff::Error) when the date string is not in the format `YYYY-MM-DD`.
     #[inline]
-    pub fn published(&self) -> ParseResult<NaiveDate> {
-        NaiveDate::parse_from_str(&self.published, "%Y-%m-%d")
+    pub fn published(&self) -> Result<Date, jiff::Error> {
+        Date::strptime("%Y-%m-%d", &self.published)
     }
 }
 

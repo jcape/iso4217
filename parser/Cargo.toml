@@ -12,7 +12,7 @@ rust-version.workspace = true
 version.workspace = true
 
 [dependencies]
-chrono = { workspace = true, features = ["serde", "std"] }
+jiff = { workspace = true, features = ["std"] }
 serde = { workspace = true, features = ["alloc", "derive"] }
 
 [dev-dependencies]
