@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.5](https://github.com/jcape/iso4217/compare/iso4217-static-v0.2.4...iso4217-static-v0.2.5) - 2026-10-07
+## [0.3.0](https://github.com/jcape/iso4217/compare/iso4217-static-v0.2.4...iso4217-static-v0.3.0) - 2026-10-07
 
 ### Added
 
