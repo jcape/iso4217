@@ -6,7 +6,11 @@
 #[cfg(feature = "serde")]
 pub mod serde;
 
-use core::str::FromStr;
+use core::{
+    error::Error as CoreError,
+    fmt::{Display, Formatter, Result as FmtResult},
+    str::FromStr,
+};
 use iso3166_static::{Alpha2, Alpha3, Numeric};
 
 iso4217_macros::generate!(xml = "list-one.xml", zerocopy = true);
@@ -40,6 +44,20 @@ impl Error {
         matches!(self, Self::NoUniversalCurrency)
     }
 }
+
+impl Display for Error {
+    #[inline]
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+        f.write_str(match self {
+            Self::InvalidCode => "Invalid currency code",
+            Self::InvalidLength => "Invalid currency code length",
+            Self::InvalidCharset => "Currency code contains non-ASCII characters",
+            Self::NoUniversalCurrency => "Country does not have a universal currency",
+        })
+    }
+}
+
+impl CoreError for Error {}
 
 impl AsRef<str> for Currency {
     #[inline]
@@ -106,6 +124,12 @@ impl TryFrom<Alpha3> for Currency {
 mod test {
     use super::*;
     use iso3166_static::{Alpha2, Alpha3, Numeric};
+
+    #[test]
+    fn error_source() {
+        let err: &dyn CoreError = &Error::InvalidCode;
+        assert!(err.source().is_none());
+    }
 
     #[test]
     fn for_country() {
