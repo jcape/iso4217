@@ -4,8 +4,8 @@ members = ["macros", "parser", "static"]
 resolver = "2"
 
 [workspace.dependencies]
-iso4217-macros = { default-features = false, path = "./macros", version = "=0.3.0" }
-iso4217-parser = { default-features = false, path = "./parser", version = "=0.3.0" }
+iso4217-macros = { default-features = false, path = "./macros", version = "=0.3.1" }
+iso4217-parser = { default-features = false, path = "./parser", version = "=0.3.1" }
 jiff = { default-features = false, version = "0.2.38" }
 quick-xml = { features = ["serialize"], version = "0.42" }
 serde = { default-features = false, features = ["derive"], version = "1.0.229" }
@@ -86,7 +86,7 @@ edition = "2024"
 license = "Apache-2.0"
 repository = "https://github.com/jcape/iso4217"
 rust-version = "1.88.0"
-version = "0.3.0"
+version = "0.3.1"
 
 [profile.release]
 lto = true
