@@ -13,5 +13,5 @@ As an end-user, this probably isn't the crate you're looking for, you probably w
 [crate-image]: https://img.shields.io/crates/v/iso4217-macros.svg?style=for-the-badge
 [crate-link]: https://crates.io/crates/iso4217-macros/0.3.0
 [docs-image]: https://img.shields.io/docsrs/iso4217-macros?style=for-the-badge
-[docs-link]: https://docs.rs/crate/iso4217-macros/0.3.0/iso4217_macros
+[docs-link]: https://docs.rs/iso4217-macros/0.3.0/iso4217_macros
 [msrv-image]: https://img.shields.io/crates/msrv/iso4217-macros/0.3.0?style=for-the-badge

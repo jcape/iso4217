@@ -20,11 +20,11 @@ A collection of crates for use with ISO 4217 Currency Codes.
 [parser-link]: https://github.com/jcape/iso4217/tree/main/parser
 [macros-link]: https://github.com/jcape/iso4217/tree/main/macros
 [static-crate-image]: https://img.shields.io/crates/v/iso4217-static.svg?style=flat-square
-[static-crate-link]: https://crates.io/crates/iso4217-static/0.3.2/
+[static-crate-link]: https://crates.io/crates/iso4217-static/0.3.0/
 [parser-crate-image]: https://img.shields.io/crates/v/iso4217-parser.svg?style=flat-square
-[parser-crate-link]: https://crates.io/crates/iso4217-parser/0.3.2/
+[parser-crate-link]: https://crates.io/crates/iso4217-parser/0.3.0/
 [macros-crate-image]: https://img.shields.io/crates/v/iso4217-macros.svg?style=flat-square
-[macros-crate-link]: https://crates.io/crates/iso4217-macros/0.3.2/
+[macros-crate-link]: https://crates.io/crates/iso4217-macros/0.3.0/
 [license-image]: https://img.shields.io/github/license/jcape/iso4217?style=flat-square
 [license-link]: LICENSE
 [deps-image]: https://deps.rs/repo/github/jcape/iso4217/status.svg?style=flat-square
